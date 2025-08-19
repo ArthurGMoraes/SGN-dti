@@ -22,10 +22,25 @@ with app.app_context():
 
     exemplos_notas = [
         ("Ana", "Matemática", 8.5),
-        ("Ana", "Português", 7.0),
+        ("Ana", "Português", 6.5),
+        ("Ana", "História", 4.5),
+        ("Ana", "Ciências", 8.5),
+        ("Ana", "Geografia", 7.0),
         ("Bruno", "História", 9.0),
+        ("Bruno", "Matemática", 9.0),
+        ("Bruno", "Português", 1.0),
+        ("Bruno", "Geografia", 10.0),
+        ("Bruno", "Ciências", 4.3),
         ("Carla", "Geografia", 6.5),
+        ("Carla", "Matemática", 6.9),
+        ("Carla", "Ciências", 7.6),
+        ("Carla", "Português", 4.7),
+        ("Carla", "História", 6.6),
         ("Diego", "Ciências", 8.0),
+        ("Diego", "Matemática", 9.8),
+        ("Diego", "Português", 3.2),
+        ("Diego", "História", 4.4),
+        ("Diego", "Geografia", 8.7),
     ]
 
     for aluno_nome, materia_nome, valor in exemplos_notas:
