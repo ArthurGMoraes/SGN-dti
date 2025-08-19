@@ -1,12 +1,9 @@
 from flask import Flask, request, jsonify
 from app import db
 from app.models import Aluno, Disciplina, Nota
-from app import create_app
-from flask import current_app as app  
 
-
-#POST
 def init_routes(app):
+    # -------------------- POST --------------------
     @app.route("/alunos", methods=["POST"])
     def adicionar_aluno():
         data = request.get_json()
@@ -21,7 +18,7 @@ def init_routes(app):
         aluno = Aluno(nome=nome)
         db.session.add(aluno)
         db.session.commit()
-        return jsonify({"mensagem": f"Aluno {nome} adicionado com sucesso", "id": aluno.id}), 201
+        return jsonify({"mensagem": f"{nome} adicionado"}), 201
 
     @app.route("/notas", methods=["POST"])
     def atribuir_nota():
@@ -44,7 +41,6 @@ def init_routes(app):
 
         nota = Nota(aluno_id=aluno_id, disciplina_id=disciplina_id, valor=valor)
         db.session.add(nota)
-
         db.session.commit()
         return jsonify({"mensagem": f"Nota atribuída com sucesso a {aluno.nome}"}), 200
 
@@ -59,7 +55,7 @@ def init_routes(app):
             return jsonify({"erro": "Aluno não encontrado"}), 404
 
         aluno.presencas += presencas
-        if aluno.presencas > 10:  # limite do TOTAL_AULAS
+        if aluno.presencas > 10:  # TOTAL_AULAS
             aluno.presencas = 10
 
         db.session.commit()
@@ -69,8 +65,7 @@ def init_routes(app):
             "frequencia": aluno.frequencia()
         }), 200
 
-
-    #GET
+    # -------------------- GET --------------------
     @app.route("/alunos", methods=["GET"])
     def listar_alunos():
         alunos = Aluno.query.all()
@@ -93,16 +88,21 @@ def init_routes(app):
         notas = []
         for nota in aluno.notas:
             notas.append({
-                "disciplina": nota.disciplina.nome,
+                "id": nota.id,  # adiciona o id
+                "disciplina": nota.disciplina.nome,  # garante o nome da disciplina
                 "valor": nota.valor
             })
+
+        # calcular média geral
+        media = round(sum(n['valor'] for n in notas)/len(notas), 2) if notas else None
 
         return jsonify({
             "id": aluno.id,
             "nome": aluno.nome,
             "presencas": aluno.presencas,
             "frequencia": aluno.frequencia(),
-            "notas": notas
+            "notas": notas,
+            "media": media
         }), 200
 
     @app.route("/disciplinas", methods=["GET"])
