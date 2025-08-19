@@ -1,0 +1,11 @@
+#Python cache / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+
+# IDE configs
+.vscode/
