@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import "./App.css";
+
 
 function App() {
   const [alunos, setAlunos] = useState([]);
@@ -103,7 +105,6 @@ function App() {
     buscarAlunos();
   };
 
-  // --- Cálculo dos alunos com problemas ---
   const mediaDaSala =
     alunos.length > 0
       ? alunos.reduce((soma, a) => soma + a.mediaAluno, 0) / alunos.length
@@ -112,7 +113,6 @@ function App() {
   const alunosFrequenciaBaixa = alunos.filter((a) => a.frequencia < 75);
   const alunosAcimaMedia = alunos.filter((a) => a.mediaAluno > mediaDaSala);
 
-  // --- Função para renderizar tabela ---
   const renderTabela = (lista) => (
     <table border="1" className="w-full mb-6">
       <thead>
@@ -124,7 +124,7 @@ function App() {
           <th>Média</th>
           <th>Presenças</th>
           <th>Frequência</th>
-          <th>Ações</th>
+          <th>Chamada</th>
         </tr>
       </thead>
       <tbody>
@@ -133,8 +133,7 @@ function App() {
             <td>{aluno.nome}</td>
             {disciplinas.map((d) => (
               <td key={d}>
-                {aluno.materias[d] ? aluno.materias[d].join(", ") : "-"} (
-                {aluno.mediasPorMateria[d]?.toFixed(1) || "-"})
+                {aluno.materias[d] ? aluno.materias[d].join(", ") : "-"}
               </td>
             ))}
             <td>{aluno.mediaAluno.toFixed(1)}</td>
@@ -145,13 +144,13 @@ function App() {
                 onClick={() => atualizarPresenca(aluno.id, 1)}
                 className="px-2 py-1 bg-green-500 text-white rounded mr-1"
               >
-                + Presença
+                +
               </button>
               <button
                 onClick={() => atualizarPresenca(aluno.id, -1)}
                 className="px-2 py-1 bg-red-500 text-white rounded"
               >
-                - Presença
+                -
               </button>
             </td>
           </tr>
@@ -161,10 +160,9 @@ function App() {
   );
 
   return (
-    <div className="p-6">
+    <div className="container text-center">
       <h1 className="text-2xl font-bold mb-4">Gestão de Alunos</h1>
 
-      {/* Formulário para adicionar aluno */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold">Adicionar Aluno</h2>
         <input
@@ -182,7 +180,6 @@ function App() {
         </button>
       </div>
 
-      {/* Formulário para adicionar nota */}
       <div className="mb-6">
         <h2 className="text-lg font-semibold">Adicionar Nota</h2>
         <select
@@ -192,9 +189,7 @@ function App() {
         >
           <option value="">Selecione o aluno</option>
           {alunos.map((a) => (
-            <option key={a.id} value={a.id}>
-              {a.nome}
-            </option>
+            <option key={a.id} value={a.id}>{a.nome}</option>
           ))}
         </select>
 
@@ -205,9 +200,7 @@ function App() {
         >
           <option value="">Selecione a disciplina</option>
           {disciplinas.map((d, idx) => (
-            <option key={idx} value={idx + 1}>
-              {d}
-            </option>
+            <option key={idx} value={idx + 1}>{d}</option>
           ))}
         </select>
 
@@ -230,34 +223,28 @@ function App() {
         </button>
       </div>
 
-      {/* Tabela geral */}
       <h2 className="text-lg font-bold mb-2">Todos os Alunos</h2>
       {renderTabela(alunos)}
 
-      {/* Alunos com frequência baixa */}
       <h2 className="text-lg font-bold mt-6 text-red-600">
         Alunos com Frequência &lt; 75%
       </h2>
       <ul className="list-disc pl-6">
         {alunosFrequenciaBaixa.map((a) => (
-          <li key={a.id}>
-            {a.nome} — {a.frequencia.toFixed(1)}%
-          </li>
+          <li key={a.id}>{a.nome} — {a.frequencia.toFixed(1)}%</li>
         ))}
       </ul>
 
-      {/* Alunos acima da média da sala */}
       <h2 className="text-lg font-bold mt-6 text-green-600">
         Alunos acima da média da sala (média da sala: {mediaDaSala.toFixed(1)})
       </h2>
       <ul className="list-disc pl-6">
         {alunosAcimaMedia.map((a) => (
-          <li key={a.id}>
-            {a.nome} — média {a.mediaAluno.toFixed(1)}
-          </li>
+          <li key={a.id}>{a.nome} - média {a.mediaAluno.toFixed(1)}</li>
         ))}
       </ul>
     </div>
+
   );
 }
 
