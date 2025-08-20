@@ -55,8 +55,8 @@ def init_routes(app):
             return jsonify({"erro": "Aluno não encontrado"}), 404
 
         aluno.presencas += presencas
-        if aluno.presencas > 10:  # TOTAL_AULAS
-            aluno.presencas = 10
+        if aluno.presencas > 200:  # TOTAL_AULAS
+            aluno.presencas = 200
 
         db.session.commit()
         return jsonify({
@@ -88,8 +88,8 @@ def init_routes(app):
         notas = []
         for nota in aluno.notas:
             notas.append({
-                "id": nota.id,  # adiciona o id
-                "disciplina": nota.disciplina.nome,  # garante o nome da disciplina
+                "id": nota.id,  
+                "disciplina": nota.disciplina.nome,  
                 "valor": nota.valor
             })
 

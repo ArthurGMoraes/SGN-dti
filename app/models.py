@@ -2,7 +2,7 @@ from app import db
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-TOTAL_AULAS = 10 # o número de aulas é fixo
+TOTAL_AULAS = 200 # o número de aulas é fixo (200 dias letivos)
 
 class Aluno(db.Model):
     __tablename__ = "alunos"
