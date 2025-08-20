@@ -8,7 +8,7 @@ Tendo em vista os requisitos do projeto é ṕossível perceber que não há nec
 0. (opcional) gerar um ambiente virtual e baixar as dependências com **pip install -r requirements.txt**
 1. inicializar back-end: **python run.py**
 2. (opcional) popular bd: **python seed.py**
-3. inicializar front-end: **cd web**
+3. inicializar front-end: **cd web**  
                           **npm run dev**
 
 
