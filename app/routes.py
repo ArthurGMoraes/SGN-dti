@@ -39,8 +39,16 @@ def init_routes(app):
         if not aluno or not disciplina:
             return jsonify({"erro": "Aluno ou disciplina não encontrado"}), 404
 
-        nota = Nota(aluno_id=aluno_id, disciplina_id=disciplina_id, valor=valor)
-        db.session.add(nota)
+        nota = Nota.query.filter_by(aluno_id=aluno_id, disciplina_id=disciplina_id).first()
+    
+        if nota:
+            nota.valor = valor
+            mensagem = f"Nota de {aluno.nome} atualizada com sucesso"
+        else:
+            nota = Nota(aluno_id=aluno_id, disciplina_id=disciplina_id, valor=valor)
+            db.session.add(nota)
+            mensagem = f"Nota atribuída com sucesso a {aluno.nome}"
+
         db.session.commit()
         return jsonify({"mensagem": f"Nota atribuída com sucesso a {aluno.nome}"}), 200
 
