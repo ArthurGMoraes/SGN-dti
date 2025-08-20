@@ -14,7 +14,7 @@ with app.app_context():
     alunos = ["Ana", "Bruno", "Carla", "Diego"]
     for nome in alunos:
         if not Aluno.query.filter_by(nome=nome).first():
-            db.session.add(Aluno(nome=nome, presencas=5))
+            db.session.add(Aluno(nome=nome, presencas=155))
     db.session.commit()
 
     disciplinas = {d.nome: d for d in Disciplina.query.all()}
